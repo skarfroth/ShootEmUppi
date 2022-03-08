@@ -4,6 +4,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float movementSpeed = 5f;
 
+    private float cooldownEndtime = 0f;
+    private float shootCooldown = 0.2f;
     private Rigidbody2D rb2d;
     private Vector2 movementVector;
 
@@ -11,15 +13,17 @@ public class PlayerController : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
     }
-
-    // Update is called once per frame
     void Update()
     {
         movementVector.x = Input.GetAxis("Horizontal");
 
         if (Input.GetKey(KeyCode.Space))
         {
-            Shoot();
+            if (Time.time >= cooldownEndtime)
+            {
+                cooldownEndtime = Time.time + shootCooldown;
+                Shoot();
+            }
         }
     }
 
@@ -33,6 +37,7 @@ public class PlayerController : MonoBehaviour
         GameObject bullet = ObjectPool.SharedInstance.GetPooledObject();
         if (bullet != null)
         {
+            bullet.transform.position = transform.position;
             bullet.SetActive(true);
         }
     }
