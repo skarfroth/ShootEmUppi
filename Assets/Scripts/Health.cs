@@ -22,5 +22,11 @@ public class Health : MonoBehaviour
             TakeDamage(50f);
             other.gameObject.SetActive(false);
         }
+
+        if(other.CompareTag("EnemyBullet") && this.CompareTag("Player"))
+        {
+            TakeDamage(25f);
+            Destroy(other.gameObject);
+        }
     }
 }
