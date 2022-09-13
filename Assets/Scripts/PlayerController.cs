@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float movementSpeed = 5f;
